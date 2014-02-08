@@ -1,0 +1,36 @@
+<html>
+<head><title>coffee calc</title></head>
+<body>
+  <form action='/coffees/new' method='get'>
+    <label for='what'>
+      What:
+      <input id='what' name='what'>
+    </label>
+    <label for='cost'>
+      Cost:
+      <input id='cost' name='cost'>
+    </label>
+    <label for='who'>
+      Who: (optional)
+      <input id='who' name='who'>
+    </label>
+    <button type='submit'>add coffee</button>
+  </form>
+  <table id='coffees'>
+    <thead>
+      <tr>
+        <td>What</td>
+        <td>Cost (Total: $<%= @total.to_f %>)</td>
+        <td>Who</td>
+      </tr>
+    </thead>
+    <% @coffees.each do |coffee| %>
+      <tr>
+        <td><%= coffee.what %></td>
+        <td>$<%= coffee.cost.to_f %></td>
+        <td><%= coffee.who %></td>
+      </tr>
+    <% end %>
+  </table>
+</body>
+</html>
