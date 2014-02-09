@@ -4,7 +4,6 @@
 params
 differences between get & post
 
-
 ## secondary focus
 sinatra
 how to use redirect to avoid re-posting form contents

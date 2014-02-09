@@ -1,11 +1,11 @@
-require 'sinatra'
+require "sinatra"
 
 $coffees = []
 
-get '/' do
-  $coffees << params if params[:what]
+get "/" do
+  $coffees << params
   """
-  <html><head><title>coffee calc</title></head>
+  <html>
   <body>
     <form action='/' method='get'>
       What: <input name='what'>
@@ -13,13 +13,14 @@ get '/' do
       Who: <input name='who'>
       <button type='submit'>add coffee</button>
     </form>
-    #{coffees}
-  </body></html>
+    #{coffees_html}
+  </body>
+  </html>
   """
 end
 
-def coffees
+def coffees_html
   $coffees.map { |coffee|
-    "<div>" + coffee.values.join(' - ') + "</div>"
-  }.join('<br>')
+    "<div>#{coffee[:what]} #{coffee[:who]} #{coffee[:cost]}</div>"
+  }.join("<br>")
 end
