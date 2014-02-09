@@ -9,7 +9,7 @@ sinatra
 how to use redirect to avoid re-posting form contents
 
 ## app layout
-new coffee form (who, what, cost)
+new coffee form (what, cost)
 list of coffees
 
 ## components
