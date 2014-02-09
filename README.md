@@ -19,4 +19,4 @@ sinatra + template
 extension exercises?
 - totals (map/reduce?)
 - persistence w/ datamapper/sqlite3
--
+- `nc -l 4567`

@@ -15,26 +15,10 @@ end
 DataMapper.finalize.auto_upgrade!
 
 get '/' do
+  Coffee.create!(params) if params[:what]
   @coffees = Coffee.all
   @total = total(@coffees)
   erb :index
-end
-
-get '/coffees/new' do
-  Coffee.create!(params)
-  @coffees = Coffee.all
-  @total = total(@coffees)
-  erb :index
-  # redirect '/'
-end
-
-post '/coffees/new' do
-  # params.to_s
-  Coffee.create!(params)
-  @coffees = Coffee.all
-  @total = total(@coffees)
-  erb :index
-  # redirect '/'
 end
 
 def total(coffees)
