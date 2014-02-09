@@ -1,9 +1,9 @@
 require 'sinatra'
 
-@@coffees ||= []
+$coffees = []
 
 get '/' do
-  @@coffees << params if params[:what]
+  $coffees << params if params[:what]
   """
   <html><head><title>coffee calc</title></head>
   <body>
@@ -19,7 +19,7 @@ get '/' do
 end
 
 def coffees
-  @@coffees.map { |coffee|
+  $coffees.map { |coffee|
     "<div>" + coffee.values.join(' - ') + "</div>"
   }.join('<br>')
 end
