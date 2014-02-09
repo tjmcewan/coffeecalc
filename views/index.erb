@@ -1,7 +1,7 @@
 <html>
 <head><title>coffee calc</title></head>
 <body>
-  <form action='/' method='get'>
+  <form action='/' method='post'>
     <label for='what'>
       What:
       <input id='what' name='what'>
@@ -20,15 +20,15 @@
     <thead>
       <tr>
         <td>What</td>
-        <td>Cost (Total: $<%= @total.to_f %>)</td>
+        <td>Cost</td>
         <td>Who</td>
       </tr>
     </thead>
-    <% @coffees.each do |coffee| %>
+    <% @@coffees.each do |coffee| %>
       <tr>
-        <td><%= coffee.what %></td>
-        <td>$<%= coffee.cost.to_f %></td>
-        <td><%= coffee.who %></td>
+        <td><%= coffee[:what] %></td>
+        <td>$<%= coffee[:cost].to_f %></td>
+        <td><%= coffee[:who] %></td>
       </tr>
     <% end %>
   </table>
