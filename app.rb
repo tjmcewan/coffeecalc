@@ -1,30 +1,22 @@
 require 'sinatra'
-require 'data_mapper'
 
 @@coffees ||= []
 
 get '/' do
+  @@coffees << params if params[:what]
   """
-  <html>
-  <head><title>coffee calc</title></head>
+  <html><head><title>coffee calc</title></head>
   <body>
-    <form action='/' method='post'>
+    <form action='/' method='get'>
       What: <input name='what'>
       Cost: <input name='cost'>
       Who: <input name='who'>
       <button type='submit'>add coffee</button>
     </form>
     #{coffees}
-  </body>
-  </html>
+  </body></html>
   """
 end
-
-post '/' do
-  @@coffees << params
-  redirect '/'
-end
-
 
 def coffees
   @@coffees.map { |coffee|
