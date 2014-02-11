@@ -116,9 +116,7 @@ Now you'll need to get the information into that `$coffees` array when the reque
 
 Have a go at adding the coffee params to the `$coffees` variable yourself, but first replace `<!-- coffees go here -->` in your form with:
 
-```
 #{ $coffees.inspect }
-```
 
 This will display the `$coffees` variable in the HTML in your browser so we can tell if the information is being stored.
 
@@ -132,9 +130,7 @@ If you're storing your params correctly, you should be able to refresh the brows
 
 Now replace our `#{ $coffees.inspect }` line with a call to a method:
 
-```
 #{ coffees_html }
-```
 
 We'll name the method "coffees_html", so that what it does is reasonably obvious.  Define it like so:
 
@@ -146,3 +142,4 @@ end
 
 You'll want to iterate over the `$coffees` array and turn each hash into an HTML string, surrounded by `<div>`s, which should then be all joined together with `<br>`s.
 
+### moar to come ...
