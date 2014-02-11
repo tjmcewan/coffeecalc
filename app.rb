@@ -13,7 +13,7 @@ get "/" do
       Cost: <input name='cost'>
       <button type='submit'>add coffee</button>
     </form>
-    #{coffees_html}
+    #{ coffees_html }
   </body>
   </html>
   """
@@ -21,6 +21,6 @@ end
 
 def coffees_html
   $coffees.map { |coffee|
-    "<div>#{coffee[:what]} $#{coffee[:cost]}</div>"
+    "<div>#{ coffee[:what] } $#{ coffee[:cost] }</div>"
   }.join("<br>")
 end
