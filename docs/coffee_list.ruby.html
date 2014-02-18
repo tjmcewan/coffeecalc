@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Coffee List Display</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          
+          <h1 id="coffee-list-display">Coffee List Display</h1>
+<p><code>Inspect</code> works for debugging, but we don’t want to use it in production.  For one thing, it’s really hard to style the output.  Let’s wrap our coffee list in proper HTML.</p>
+<h3 id="setup">Setup</h3>
+<p>First let’s make a method that will return our coffees wrapped in HTML tags.  We’ll name the method “coffees_html”, so that what it does is reasonably obvious.  Define it like so:</p>
+<pre><code class="lang-ruby"><span class="hljs-function"><span class="hljs-keyword">def</span> </span>coffees_html
+<span class="hljs-comment"># build HTML here</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+<p>And in your <code>template</code> method change your <code>#{ $coffees.inspect }</code> line to call our new method:</p>
+
+          
+            <div class='highlight'><pre><span class="hljs-header">#{ coffees_html }</span></pre></div>
+          
+        
+
+        
+      </div>
+
+      
+        
+        <h3 id="now-for-the-fun-part">Now for the fun part</h3>
+<p>Write something to turn the <code>$coffees</code> global variable into HTML that looks like this:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>Flat White $3.50<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>Cappuccino $2.50<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<blockquote>
+<p>Remember, the <code>$coffees</code> variable is an array of hashes.</p>
+</blockquote>
+<p>We’ll want to loop over the <code>$coffees</code> array and turn each hash into an HTML string, surrounded by <code>&lt;div&gt;</code>s, which should then be all joined together with <code>&lt;br&gt;</code>s.  We’ll also need to ensure we’re returning a string.</p>
+<p>For some solution ideas, <a href="../snippets/coffees_html.rb.txt">check out this</a>.</p>
+
+        
+      
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>
