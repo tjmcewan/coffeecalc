@@ -118,7 +118,7 @@ Have a go at adding the coffee params to the `$coffees` variable yourself, but f
 
 #{ $coffees.inspect }
 
-This will display the `$coffees` variable in the HTML in your browser so we can tell if the information is being stored.
+This will display the `$coffees` variable in the HTML in your browser so we can tell if the information is being stored. *Hint: you might also like to do the same with `params.inspect`, to see how the parameters are stored.*
 
 > Hint: if you get stuck, try [Ruby's Array documentation](http://www.ruby-doc.org/core-2.1.0/Array.html#method-i-3C-3C)
 
