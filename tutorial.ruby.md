@@ -48,7 +48,7 @@ And in `app.rb`, after the `require "sinatra"` line, add:
 require "sinatra/reloader"
 ```
 
-Now start up your app again and change the "Hello world!" text and refresh your browser.
+Now start up your app again (`ruby app.rb`) and change the "Hello world!" text and refresh your browser.
 
 If you get stuck, make sure your `app.rb` looks like [this one](../snippets/install_sinatra.rb.txt).
 
@@ -71,7 +71,7 @@ Accept-Language: en-US,en;q=0.8
 
 > Mentor dicussion point: what are these and what do they mean?
 
-The important part to note is the first line `GET / HTTP/1.1` - this is what a "GET" request for a server's "root URL" looks like.  You can also see this in Sinatra's log output.
+The important part to note is the first line `GET / HTTP/1.1` - this is what a "GET" request for a server's "root URL" looks like.  You can also see this in Sinatra's log output, in the terminal window.
 
 > If Sinatra says it has "backup from WEBrick", Ruby's built-in webserver, then you may see multiple GET requests each time you refresh.  Only one request is actually being issued, you can safely ignore the other.
 
@@ -95,6 +95,8 @@ get "/" do
   """
 end
 ```
+
+> *Hint: triple quotes in Ruby will preserve new lines.*
 
 For simplicty, this form sends the information to the same URL ("/").  Refresh your browser and you should see the form you just created.
 
@@ -126,7 +128,7 @@ Have a go at adding the coffee params to the `$coffees` variable yourself, but f
 
 #{ $coffees.inspect }
 
-This will display the `$coffees` variable in the HTML in your browser so we can tell if the information is being stored.
+This will display the `$coffees` variable in the HTML in your browser so we can tell if the information is being stored.  *Hint: you might also like to do the same with `params.inspect`, to see how the parameters are stored.*
 
 > Hint: if you get stuck, try [Ruby's Array documentation](http://www.ruby-doc.org/core-2.1.0/Array.html#method-i-3C-3C) first.  If you're still stuck, [check here](../snippets/store_coffees.rb.txt).
 
