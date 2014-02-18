@@ -90,6 +90,8 @@ get "/" do
 end
 ```
 
+*Hint: triple quotes in Ruby will preserve new lines.*
+
 For simplicty, this form sends the information to the same URL ("/").  Refresh your browser and you should see the form you just created.
 
 Now let's see what the browser sends to the server when you submit the form.  Put some text into the form and click the 'add coffee' button.  Check out the request headers in the Network tab and you should see something like this:
