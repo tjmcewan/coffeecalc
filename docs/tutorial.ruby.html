@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Web fundamentals tutorial</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          
+          <h1 id="web-fundamentals-tutorial">Web fundamentals tutorial</h1>
+<h2 id="goal">Goal</h2>
+<p>The goal of this tutorial is to create a coffee listing application without the magic of Rails.  You will hopefully gain a greater understanding of the underlying principles involved in programming web applications, and gain a greater appreciation for some of the things Rails does for you.</p>
+<p>This tutorial uses <a href="http://www.sinatrarb.com">Sinatra</a> as a tool to demonstrate some basic web principles.  Sinatra is a small framework for creating web applications in Ruby with minimal effort.</p>
+<h2 id="install-sinatra-hello-world-">Install Sinatra » “Hello World”</h2>
+<p>Let’s start off by getting Sinatra running.</p>
+<p>Install the gem:</p>
+<pre><code>gem install sinatra
+</code></pre><p>Create a file called “app.rb” and paste the following in:</p>
+<pre><code class="lang-ruby"><span class="hljs-keyword">require</span> <span class="hljs-string">"sinatra"</span>
+
+get <span class="hljs-string">"/"</span> <span class="hljs-keyword">do</span>
+<span class="hljs-string">"Hello world!"</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+<p>And run with:</p>
+<pre><code>ruby app.rb
+</code></pre><p>View at: <a href="http://localhost:4567"><a href="http://localhost:4567">http://localhost:4567</a></a></p>
+<p>Hit <code>ctrl-c</code> at your command prompt to stop your app.</p>
+<p>Sinatra doesn’t reload your code changes for you like Rails does, so let’s add an extension to Sinatra to get this functionality:</p>
+<pre><code>gem install sinatra-contrib
+</code></pre><p>And in <code>app.rb</code>, after the <code>require &quot;sinatra&quot;</code> line, add:</p>
+<pre><code class="lang-ruby"><span class="hljs-keyword">require</span> <span class="hljs-string">"sinatra/reloader"</span>
+</code></pre>
+<p>Now start up your app again (<code>ruby app.rb</code>) and change the “Hello world!” text and refresh your browser.</p>
+<p>If you get stuck, make sure your <code>app.rb</code> looks like <a href="../snippets/install_sinatra.rb.txt">this one</a>.</p>
+<h2 id="web-inspector-request-headers">Web Inspector » Request Headers</h2>
+<p>In your browser, open up your web console.  (For most browsers, this can be accessed by right clicking something on the page and choosing “Inspect Element”.)  I recommend you use Chrome for this; if you are using Chrome, you’re looking for the <code>Network</code> tab.</p>
+<p>Refresh your browser, then click on the ‘localhost’ line in the web inspector, then in the Headers tab, click ‘view source’.  You should see something similar to this:</p>
+<pre><code>GET / HTTP/1.1
+Host: localhost:4567
+Connection: keep-alive
+Cache-Control: max-age=0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,<span class="hljs-emphasis">*/*</span>;q=0.8
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10<span class="hljs-emphasis">_9_</span>1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.70 Safari/537.36
+Accept-Encoding: gzip,deflate,sdch
+Accept-Language: en-US,en;q=0.8
+</code></pre><blockquote>
+<p>Mentor dicussion point: what are these and what do they mean?</p>
+</blockquote>
+<p>The important part to note is the first line <code>GET / HTTP/1.1</code> - this is what a “GET” request for a server’s “root URL” looks like.  You can also see this in Sinatra’s log output, in the terminal window.</p>
+<blockquote>
+<p>If Sinatra says it has “backup from WEBrick”, Ruby’s built-in webserver, then you may see multiple GET requests each time you refresh.  Only one request is actually being issued, you can safely ignore the other.</p>
+</blockquote>
+<h2 id="html-form-get-parameters">HTML Form » GET parameters</h2>
+<p>To get our coffees into our app, we’ll need an HTML form to send through which coffee we want and how much it costs.  Replace your <code>get &quot;/&quot;</code> from above with this:</p>
+<pre><code class="lang-ruby">get <span class="hljs-string">"/"</span> <span class="hljs-keyword">do</span>
+<span class="hljs-string">""</span><span class="hljs-string">"
+&lt;html&gt;
+&lt;body&gt;
+&lt;form action='/' method='get'&gt;
+What: &lt;input name='what'&gt;
+Cost: &lt;input name='cost'&gt;
+&lt;button type='submit'&gt;add coffee&lt;/button&gt;
+&lt;/form&gt;
+&lt;!-- coffees go here --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+"</span><span class="hljs-string">""</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+<blockquote>
+<p><em>Hint: triple quotes in Ruby will preserve new lines.</em></p>
+</blockquote>
+<p>For simplicty, this form sends the information to the same URL (“/“).  Refresh your browser and you should see the form you just created.</p>
+<p>Now let’s see what the browser sends to the server when you submit the form.  Put some text into the form and click the ‘add coffee’ button.  Check out the request headers in the Network tab and you should see something like this:</p>
+<p>GET /?what=flat+white&amp;cost=3.50 HTTP/1.1</p>
+<blockquote>
+<p>Mentor dicussion point: where do the parameter names come from?  what is the question mark doing?</p>
+</blockquote>
+<p>If it’s not quite working, check out <a href="../snippets/html_form.rb.txt">this</a>.</p>
+<h2 id="store-coffees-global-variable">Store coffees » global variable</h2>
+<p>So our form is sending the coffee info to our app, but we’re not doing anything with it yet.  We should save the coffee information before we send the HTML form to the browser.  For simplicity, let’s just store the coffee details in a variable.  So that they’ll be available between requests, we’ll need to use a <em>global</em> variable.  This is a drastically simplified version of what Rails calls the Model layer.</p>
+<p>Add this to your <code>app.rb</code> somewhere (convention says it should be near the top, under the <code>require</code> lines):</p>
+<pre><code class="lang-ruby"><span class="hljs-variable">$coffees</span> = []
+</code></pre>
+<p>This creates an empty array when your app first starts up.</p>
+<blockquote>
+<p>Hint: this global variable won’t be around for very long - it will be reset to the empty array each time the server restarts.  Because we’re using Sinatra’s reloader, this will be every time you save your <code>app.rb</code> file.  Don’t worry though, it will suit our purposes nicely. ;)</p>
+</blockquote>
+<p>Now you’ll need to get the information into that <code>$coffees</code> array when the request is received.  When you fill in your form and click the submit button, Sinatra grabs the information out of the URL and makes it available as a Hash called <code>params</code>.</p>
+<p>Have a go at adding the coffee params to the <code>$coffees</code> variable yourself, but first replace <code>&lt;!-- coffees go here --&gt;</code> in your form with:</p>
+
+          
+            <div class='highlight'><pre><span class="hljs-header">#{ $coffees.inspect }</span></pre></div>
+          
+        
+
+        
+      </div>
+
+      
+        
+        <p>This will display the <code>$coffees</code> variable in the HTML in your browser so we can tell if the information is being stored.  <em>Hint: you might also like to do the same with <code>params.inspect</code>, to see how the parameters are stored.</em></p>
+<blockquote>
+<p>Hint: if you get stuck, try <a href="http://www.ruby-doc.org/core-2.1.0/Array.html#method-i-3C-3C">Ruby’s Array documentation</a> first.  If you’re still stuck, <a href="../snippets/store_coffees.rb.txt">check here</a>.</p>
+</blockquote>
+<p>If you’re storing your params correctly, you should be able to refresh the browser and see that a new hash gets added to the <code>$coffees</code> array each time.</p>
+<h2 id="template-method">Template method</h2>
+<p>That big string in our <code>get</code> route is making it a bit hard to see what our app does, so let’s move it to its own method.  Copy the HTML form out of your <code>get</code> route and paste it into a method called <code>template</code>.</p>
+<blockquote>
+<p>The part you copy should <em>include</em> the triple quotes.</p>
+</blockquote>
+<p>Then replace the form from your <code>get</code> route with a simple call to the <code>template</code> method, like so:</p>
+<pre><code class="lang-ruby">get <span class="hljs-string">"/"</span> <span class="hljs-keyword">do</span>
+<span class="hljs-variable">$coffees</span> &lt;&lt; params
+template
+<span class="hljs-keyword">end</span>
+</code></pre>
+<p>This will also make it easier to re-use the form, should we ever need to.</p>
+<blockquote>
+<p>Hint: see <a href="../snippets/template_method.rb.txt">here</a> if something went awry.</p>
+</blockquote>
+<h2 id="get-vs-post">Get VS Post</h2>
+<p>As you saw in the <a href="#store-coffees-global-variable">store coffees section</a>, if you refresh your browser, your app adds the information into the <code>$coffees</code> global repeatedly.  This is because we’re storing the params from the URL each time our <code>get</code> route is requested.</p>
+<p>This is a good point to mention that <code>GET</code> requests should not do things that change the state of the system - it’s too easy for unintended side-effects to occur.  Things that are meant to be stored in the system or manipulate something should be sent via a <code>POST</code> request.</p>
+<p>So armed with that knowledge, let’s change our form’s method to <code>post</code>.  Locate the section in the form that specifies the method as <code>get</code> and change it to <code>post</code>.  Now refresh your browser and submit a new coffee.</p>
+<p><strong>Uh oh!</strong> Welcome to Sinatra’s lovely error page, if you haven’t encountered it yet today.  The message at the bottom should say this:</p>
+<blockquote>
+<p>   Try this:</p>
+<p>   post ‘/‘ do
+     “Hello World”
+   end</p>
+</blockquote>
+<p>This is Sinatra’s way of telling you that the route you requested doesn’t exist.  You may also know this as HTTP error number 404: <em>page not found</em>. ;)</p>
+<p>Let’s add our <code>post</code> route into Sinatra:</p>
+<ul>
+<li>Grab the “Hello world” <code>post</code> route from Sinatra’s 404 page, or from above and put it under our <code>get</code> route.</li>
+<li>Replace the “Hello world” with a call to our <code>template</code> method.</li>
+<li>Now <strong>move</strong> the line that stores the coffee params over from the <code>get</code> route (ensure this goes <em>above</em> the call to <code>template</code>).</li>
+</ul>
+<p>As usual, you can check your progress <a href="../snippets/get_vs_post.rb.txt">over here</a>.</p>
+<p>Now if you refresh the page after submitting a coffee, you should see a warning from your browser that it needs to resubmit the form in order to load the page:</p>
+<blockquote>
+<p><img src="../images/confirm_resubmission.png" alt="Chrome&#39;s confirm resubmission dialog"></p>
+</blockquote>
+<p>This is a much better situation than before - this will prompt us to think about the consequences and we will probably avoid inadvertantly adding the same coffee multiple times.</p>
+<p>Do you think it would stop non-technical users from refreshing the page?  Instead of worrying about the answer to that, let’s just make it so we don’t have to.  We can do better!</p>
+<h2 id="post-redirect-get">Post/Redirect/Get</h2>
+<p>The fundamental issue is that our application sends back a proper HTML response when a <code>POST</code> request is issued and this represents the page’s location.  When you refresh the page, you’re asking the browser to re-request this location and the only way it knows how to get to that location is to send that <code>POST</code> request (which often changes the system, so isn’t what we want).</p>
+<p>The way to fix this is to not send a proper HTML response back.  Instead of the call to our <code>template</code> method, we redirect the browser to another location.</p>
+<p>In Sinatra, it looks like this:</p>
+<pre><code class="lang-ruby">redirect <span class="hljs-string">"/"</span>
+</code></pre>
+<p>Try first, then <a href="../snippets/post_redirect.rb.txt">check it here</a>.</p>
+<p>This sends back a special redirect response (HTTP 303) with a <code>Location</code> header that specifies where the browser should go:</p>
+<blockquote>
+<p>HTTP/1.1 303 See Other
+&lt;…&gt;
+Location: <a href="http://localhost:4567/">http://localhost:4567/</a></p>
+</blockquote>
+<p>To see this in action, have a look in Chrome’s Web Inspector (Network tab) and send your app a coffee:</p>
+<blockquote>
+<p><img src="../images/post_redirect.png" alt="Chrome&#39;s network tab showing a post/redirect/get"></p>
+</blockquote>
+<p>The first line shows the browser submitting the form via the <code>POST</code> request method.  The response it receives is an HTTP 303, containing the <code>Location</code> header.  It then issues a <code>GET</code> request for that location (which corresponds to our root URL, “/“) and renders the response it gets from there - which is our HTML template.</p>
+<p>Now you can refresh all you want and all you’re doing is requesting using <code>GET</code>, not <code>POST</code>.  Your browser doesn’t have to submit the form any more to display that page.</p>
+<p>This is the end of the tutorial - you’ve done an excellent job!</p>
+<p>Thanks for playing!</p>
+<p>If you were fast and would like to continue on, you can try:</p>
+<ul>
+<li><a href="./coffee_list.ruby.html">rendering our coffee list in proper HTML</a></li>
+</ul>
+
+        
+      
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>
