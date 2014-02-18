@@ -9,7 +9,7 @@ end
 
 post "/" do
   $coffees << params
-  redirect "/"
+  template
 end
 
 def template

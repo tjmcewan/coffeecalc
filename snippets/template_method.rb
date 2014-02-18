@@ -4,19 +4,15 @@ require "sinatra/reloader"
 $coffees = []
 
 get "/" do
-  template
-end
-
-post "/" do
   $coffees << params
-  redirect "/"
+  template
 end
 
 def template
   """
   <html>
   <body>
-    <form action='/' method='post'>
+    <form action='/' method='get'>
       What: <input name='what'>
       Cost: <input name='cost'>
       <button type='submit'>add coffee</button>
