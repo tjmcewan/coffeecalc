@@ -50,7 +50,7 @@ require "sinatra/reloader"
 
 Now start up your app again and change the "Hello world!" text and refresh your browser.
 
-If you get stuck, make sure your `app.rb` looks like [this one](../snippets/install_sinatra.rb).
+If you get stuck, make sure your `app.rb` looks like [this one](../snippets/install_sinatra.rb.txt).
 
 ## Web Inspector » Request Headers
 
@@ -104,7 +104,7 @@ Now let's see what the browser sends to the server when you submit the form.  Pu
 
 > Mentor dicussion point: where do the parameter names come from?  what is the question mark doing?
 
-If it's not quite working, check out [this](../snippets/html_form.rb).
+If it's not quite working, check out [this](../snippets/html_form.rb.txt).
 
 ## Store coffees » global variable
 
@@ -128,7 +128,7 @@ Have a go at adding the coffee params to the `$coffees` variable yourself, but f
 
 This will display the `$coffees` variable in the HTML in your browser so we can tell if the information is being stored.
 
-> Hint: if you get stuck, try [Ruby's Array documentation](http://www.ruby-doc.org/core-2.1.0/Array.html#method-i-3C-3C) first.  If you're still stuck, [check here](../snippets/store_coffees.rb).
+> Hint: if you get stuck, try [Ruby's Array documentation](http://www.ruby-doc.org/core-2.1.0/Array.html#method-i-3C-3C) first.  If you're still stuck, [check here](../snippets/store_coffees.rb.txt).
 
 If you're storing your params correctly, you should be able to refresh the browser and see that a new hash gets added to the `$coffees` array each time.
 
@@ -149,7 +149,7 @@ end
 
 This will also make it easier to re-use the form, should we ever need to.
 
-> Hint: see [here](../snippets/template_method.rb) if something went awry.
+> Hint: see [here](../snippets/template_method.rb.txt) if something went awry.
 
 ## Get VS Post
 
@@ -175,7 +175,7 @@ Let's add our `post` route into Sinatra:
 - Replace the "Hello world" with a call to our `template` method.
 - Now **move** the line that stores the coffee params over from the `get` route (ensure this goes _above_ the call to `template`).
 
-As usual, you can check your progress [over here](../snippets/get_vs_post.rb).
+As usual, you can check your progress [over here](../snippets/get_vs_post.rb.txt).
 
 Now if you refresh the page after submitting a coffee, you should see a warning from your browser that it needs to resubmit the form in order to load the page:
 
@@ -197,7 +197,7 @@ In Sinatra, it looks like this:
 redirect "/"
 ```
 
-Try first, then [check it here](../snippets/post_redirect.rb).
+Try first, then [check it here](../snippets/post_redirect.rb.txt).
 
 This sends back a special redirect response (HTTP 303) with a `Location` header that specifies where the browser should go:
 
