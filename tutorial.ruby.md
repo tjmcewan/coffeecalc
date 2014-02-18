@@ -216,3 +216,9 @@ Now you can refresh all you want and all you're doing is requesting using `GET`,
 This is the end of the tutorial - you've done an excellent job!
 
 Thanks for playing!
+
+
+If you were fast and would like to continue on, you can try:
+- [rendering our coffee list in proper HTML][coffee_list]
+
+[coffee_list]: ./coffee_list.ruby.html

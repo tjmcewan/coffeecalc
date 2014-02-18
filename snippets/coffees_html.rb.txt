@@ -1,4 +1,12 @@
 def coffees_html
+  coffees = []
+  $coffees.each do |coffee|
+    coffees << "<div>#{ coffee[:what] } $#{ coffee[:cost] }</div>"
+  end
+  coffees.join("<br>")
+end
+
+def coffees_html
   $coffees.map { |coffee|
     "<div>#{ coffee[:what] } $#{ coffee[:cost] }</div>"
   }.join("<br>")
