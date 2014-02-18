@@ -67,7 +67,7 @@ Accept-Language: en-US,en;q=0.8
 
 > Mentor dicussion point: what are these and what do they mean?
 
-The important part to note is the first line `GET / HTTP/1.1` - this is what a "GET" request for a server's "root URL" looks like.  You can also see this in Sinatra's log output. (NB: If Sinatra says it has "backup from WEBrick", Ruby's built-in webserver, then you may see multiple GET requests each time you refresh.  Only one request is actually being issued, you can safely ignore the other.)
+The important part to note is the first line `GET / HTTP/1.1` - this is what a "GET" request for a server's "root URL" looks like.  You can also see this in Sinatra's log output, in the terminal window. (NB: If Sinatra says it has "backup from WEBrick", Ruby's built-in webserver, then you may see multiple GET requests each time you refresh.  Only one request is actually being issued, you can safely ignore the other.)
 
 ## HTML Form > GET parameters
 
