@@ -46,7 +46,7 @@ And in `app.rb`, after the `require "sinatra"` line, add:
 require "sinatra/reloader"
 ```
 
-Now start up your app again and change the "Hello world!" text and refresh your browser.
+Now start up your app again (`ruby app.rb`) and change the "Hello world!" text and refresh your browser.
 
 ## Web Inspector > Request Headers
 
