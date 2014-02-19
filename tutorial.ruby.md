@@ -180,7 +180,7 @@ So armed with that knowledge, let's change our form's method to `post`:
 
 This is Sinatra's way of telling you that the route you requested doesn't exist.  You may also know this as HTTP error number 404: _page not found_. ;)
 
-Let's add our `post` route into Sinatra:
+Let's **add** our `post` route into Sinatra (don't remove the `get` one!):
 
 - Grab the "Hello world" `post` route from Sinatra's 404 page and put it _after_ our `get` route. (**NB:** Do not copy from above; this page uses smart quotes & will break your code.)
 - Replace the "Hello world" with a call to our `template` method. (**NB:** Don't remove the call to `template` from out `get` route.)
