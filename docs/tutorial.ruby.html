@@ -17,31 +17,31 @@
           <h1 id="web-fundamentals-tutorial">Web fundamentals tutorial</h1>
 <h2 id="goal">Goal</h2>
 <p>The goal of this tutorial is to create a coffee listing application without the magic of Rails.  You will hopefully gain a greater understanding of the underlying principles involved in programming web applications, and gain a greater appreciation for some of the things Rails does for you.</p>
-<p>This tutorial uses <a href="http://www.sinatrarb.com">Sinatra</a> as a tool to demonstrate some basic web principles.  Sinatra is a small framework for creating web applications in Ruby with minimal effort.</p>
+<p>This tutorial uses <a href="http://www.sinatrarb.com">Sinatra</a> as a tool to demonstrate some basic web principles.  Sinatra is a small framework for creating web applications in Ruby with minimal effort.  You can find a list of <a href="http://www.sinatrarb.com/wild.html">things built with Sinatra here</a>.</p>
 <h2 id="install-sinatra-hello-world-">Install Sinatra » “Hello World”</h2>
 <p>Let’s start off by getting Sinatra running.</p>
-<p>Install the gem:</p>
-<pre><code>gem install sinatra
-</code></pre><p>Create a file called “app.rb” and paste the following in:</p>
+<p>In your terminal, install the gem:</p>
+<pre><code>$ gem install sinatra
+</code></pre><p>Create a file called “app.rb” and paste the following into Sublime Text:</p>
 <pre><code class="lang-ruby"><span class="hljs-keyword">require</span> <span class="hljs-string">"sinatra"</span>
 
 get <span class="hljs-string">"/"</span> <span class="hljs-keyword">do</span>
 <span class="hljs-string">"Hello world!"</span>
 <span class="hljs-keyword">end</span>
 </code></pre>
-<p>And run with:</p>
-<pre><code>ruby app.rb
+<p>And back in your terminal, run with:</p>
+<pre><code>$ ruby app.rb
 </code></pre><p>View at: <a href="http://localhost:4567"><a href="http://localhost:4567">http://localhost:4567</a></a></p>
 <p>Hit <code>ctrl-c</code> at your command prompt to stop your app.</p>
 <p>Sinatra doesn’t reload your code changes for you like Rails does, so let’s add an extension to Sinatra to get this functionality:</p>
-<pre><code>gem install sinatra-contrib
-</code></pre><p>And in <code>app.rb</code>, after the <code>require &quot;sinatra&quot;</code> line, add:</p>
+<pre><code>$ gem install sinatra-contrib
+</code></pre><p>And in <code>app.rb</code> (Sublime Text), after the <code>require &quot;sinatra&quot;</code> line, add:</p>
 <pre><code class="lang-ruby"><span class="hljs-keyword">require</span> <span class="hljs-string">"sinatra/reloader"</span>
 </code></pre>
-<p>Now start up your app again (<code>ruby app.rb</code>) and change the “Hello world!” text and refresh your browser.</p>
+<p>Now start up your app again (<code>$ ruby app.rb</code>) and change the “Hello world!” text and refresh your browser.</p>
 <p>If you get stuck, make sure your <code>app.rb</code> looks like <a href="../snippets/install_sinatra.rb.txt">this one</a>.</p>
 <h2 id="web-inspector-request-headers">Web Inspector » Request Headers</h2>
-<p>In your browser, open up your web console.  (For most browsers, this can be accessed by right clicking something on the page and choosing “Inspect Element”.)  I recommend you use Chrome for this; if you are using Chrome, you’re looking for the <code>Network</code> tab.</p>
+<p>In your browser, open up your web console.  (For most browsers, this can be accessed by <strong>right clicking something on the page and choosing “Inspect Element”</strong>.)  I recommend you use Chrome for this; if you are using Chrome, you’re looking for the <code>Network</code> tab.</p>
 <p>Refresh your browser, then click on the ‘localhost’ line in the web inspector, then in the Headers tab, click ‘view source’.  You should see something similar to this:</p>
 <pre><code>GET / HTTP/1.1
 Host: localhost:4567
@@ -113,7 +113,11 @@ Cost: &lt;input name='cost'&gt;
 </blockquote>
 <p>If you’re storing your params correctly, you should be able to refresh the browser and see that a new hash gets added to the <code>$coffees</code> array each time.</p>
 <h2 id="template-method">Template method</h2>
-<p>That big string in our <code>get</code> route is making it a bit hard to see what our app does, so let’s move it to its own method.  Copy the HTML form out of your <code>get</code> route and paste it into a method called <code>template</code>.</p>
+<p>That big string in our <code>get</code> route is making it a bit hard to see what our app does, so let’s move it to its own method.  Copy the HTML form out of your <code>get</code> route and paste it into a method called <code>template</code>.  Like so:</p>
+<pre><code class="lang-ruby"><span class="hljs-function"><span class="hljs-keyword">def</span> </span>template
+<span class="hljs-comment"># put your HTML form string here</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
 <blockquote>
 <p>The part you copy should <em>include</em> the triple quotes.</p>
 </blockquote>
@@ -130,7 +134,11 @@ template
 <h2 id="get-vs-post">Get VS Post</h2>
 <p>As you saw in the <a href="#store-coffees-global-variable">store coffees section</a>, if you refresh your browser, your app adds the information into the <code>$coffees</code> global repeatedly.  This is because we’re storing the params from the URL each time our <code>get</code> route is requested.</p>
 <p>This is a good point to mention that <code>GET</code> requests should not do things that change the state of the system - it’s too easy for unintended side-effects to occur.  Things that are meant to be stored in the system or manipulate something should be sent via a <code>POST</code> request.</p>
-<p>So armed with that knowledge, let’s change our form’s method to <code>post</code>.  Locate the section in the form that specifies the method as <code>get</code> and change it to <code>post</code>.  Now refresh your browser and submit a new coffee.</p>
+<p>So armed with that knowledge, let’s change our form’s method to <code>post</code>:</p>
+<ul>
+<li>Locate the section in the form that specifies the method as <code>get</code> and change it to <code>post</code>.</li>
+<li>Now refresh your browser and submit a new coffee.</li>
+</ul>
 <p><strong>Uh oh!</strong> Welcome to Sinatra’s lovely error page, if you haven’t encountered it yet today.  The message at the bottom should say this:</p>
 <blockquote>
 <p>   Try this:</p>
@@ -141,8 +149,8 @@ template
 <p>This is Sinatra’s way of telling you that the route you requested doesn’t exist.  You may also know this as HTTP error number 404: <em>page not found</em>. ;)</p>
 <p>Let’s add our <code>post</code> route into Sinatra:</p>
 <ul>
-<li>Grab the “Hello world” <code>post</code> route from Sinatra’s 404 page, or from above and put it under our <code>get</code> route.</li>
-<li>Replace the “Hello world” with a call to our <code>template</code> method.</li>
+<li>Grab the “Hello world” <code>post</code> route from Sinatra’s 404 page and put it <em>after</em> our <code>get</code> route. (<strong>NB:</strong> Do not copy from above; this page uses smart quotes &amp; will break your code.)</li>
+<li>Replace the “Hello world” with a call to our <code>template</code> method. (<strong>NB:</strong> Don’t remove the call to <code>template</code> from out <code>get</code> route.)</li>
 <li>Now <strong>move</strong> the line that stores the coffee params over from the <code>get</code> route (ensure this goes <em>above</em> the call to <code>template</code>).</li>
 </ul>
 <p>As usual, you can check your progress <a href="../snippets/get_vs_post.rb.txt">over here</a>.</p>

@@ -4,19 +4,19 @@
 
 The goal of this tutorial is to create a coffee listing application without the magic of Rails.  You will hopefully gain a greater understanding of the underlying principles involved in programming web applications, and gain a greater appreciation for some of the things Rails does for you.
 
-This tutorial uses [Sinatra](http://www.sinatrarb.com) as a tool to demonstrate some basic web principles.  Sinatra is a small framework for creating web applications in Ruby with minimal effort.
+This tutorial uses [Sinatra](http://www.sinatrarb.com) as a tool to demonstrate some basic web principles.  Sinatra is a small framework for creating web applications in Ruby with minimal effort.  You can find a list of [things built with Sinatra here](http://www.sinatrarb.com/wild.html).
 
 ## Install Sinatra » "Hello World"
 
 Let's start off by getting Sinatra running.
 
-Install the gem:
+In your terminal, install the gem:
 
 ```
-gem install sinatra
+$ gem install sinatra
 ```
 
-Create a file called "app.rb" and paste the following in:
+Create a file called "app.rb" and paste the following into Sublime Text:
 
 ```ruby
 require "sinatra"
@@ -26,10 +26,10 @@ get "/" do
 end
 ```
 
-And run with:
+And back in your terminal, run with:
 
 ```
-ruby app.rb
+$ ruby app.rb
 ```
 
 View at: [http://localhost:4567](http://localhost:4567)
@@ -39,22 +39,22 @@ Hit `ctrl-c` at your command prompt to stop your app.
 Sinatra doesn't reload your code changes for you like Rails does, so let's add an extension to Sinatra to get this functionality:
 
 ```
-gem install sinatra-contrib
+$ gem install sinatra-contrib
 ```
 
-And in `app.rb`, after the `require "sinatra"` line, add:
+And in `app.rb` (Sublime Text), after the `require "sinatra"` line, add:
 
 ```ruby
 require "sinatra/reloader"
 ```
 
-Now start up your app again (`ruby app.rb`) and change the "Hello world!" text and refresh your browser.
+Now start up your app again (`$ ruby app.rb`) and change the "Hello world!" text and refresh your browser.
 
 If you get stuck, make sure your `app.rb` looks like [this one](../snippets/install_sinatra.rb.txt).
 
 ## Web Inspector » Request Headers
 
-In your browser, open up your web console.  (For most browsers, this can be accessed by right clicking something on the page and choosing "Inspect Element".)  I recommend you use Chrome for this; if you are using Chrome, you're looking for the `Network` tab.
+In your browser, open up your web console.  (For most browsers, this can be accessed by **right clicking something on the page and choosing "Inspect Element"**.)  I recommend you use Chrome for this; if you are using Chrome, you're looking for the `Network` tab.
 
 Refresh your browser, then click on the 'localhost' line in the web inspector, then in the Headers tab, click 'view source'.  You should see something similar to this:
 
@@ -136,7 +136,13 @@ If you're storing your params correctly, you should be able to refresh the brows
 
 ## Template method
 
-That big string in our `get` route is making it a bit hard to see what our app does, so let's move it to its own method.  Copy the HTML form out of your `get` route and paste it into a method called `template`.
+That big string in our `get` route is making it a bit hard to see what our app does, so let's move it to its own method.  Copy the HTML form out of your `get` route and paste it into a method called `template`.  Like so:
+
+```ruby
+def template
+  # put your HTML form string here
+end
+```
 
 > The part you copy should _include_ the triple quotes.
 
@@ -159,7 +165,10 @@ As you saw in the [store coffees section](#store-coffees-global-variable), if yo
 
 This is a good point to mention that `GET` requests should not do things that change the state of the system - it's too easy for unintended side-effects to occur.  Things that are meant to be stored in the system or manipulate something should be sent via a `POST` request.
 
-So armed with that knowledge, let's change our form's method to `post`.  Locate the section in the form that specifies the method as `get` and change it to `post`.  Now refresh your browser and submit a new coffee.
+So armed with that knowledge, let's change our form's method to `post`:
+
+- Locate the section in the form that specifies the method as `get` and change it to `post`.
+- Now refresh your browser and submit a new coffee.
 
 **Uh oh!** Welcome to Sinatra's lovely error page, if you haven't encountered it yet today.  The message at the bottom should say this:
 
@@ -173,8 +182,8 @@ This is Sinatra's way of telling you that the route you requested doesn't exist.
 
 Let's add our `post` route into Sinatra:
 
-- Grab the "Hello world" `post` route from Sinatra's 404 page, or from above and put it under our `get` route.
-- Replace the "Hello world" with a call to our `template` method.
+- Grab the "Hello world" `post` route from Sinatra's 404 page and put it _after_ our `get` route. (**NB:** Do not copy from above; this page uses smart quotes & will break your code.)
+- Replace the "Hello world" with a call to our `template` method. (**NB:** Don't remove the call to `template` from out `get` route.)
 - Now **move** the line that stores the coffee params over from the `get` route (ensure this goes _above_ the call to `template`).
 
 As usual, you can check your progress [over here](../snippets/get_vs_post.rb.txt).
